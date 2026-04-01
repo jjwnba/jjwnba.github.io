@@ -7,6 +7,11 @@
 #body-wrap.post #page-header.post-bg {
   position: relative;
   overflow: hidden;
+  background-color: transparent !important;
+  background-image: url("/img/bg2.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
 }
 
 #body-wrap.post #page-header.post-bg::before {
@@ -14,15 +19,8 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-
-  background-image: url("/img/bg2.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
+  background: transparent !important;
   transform: scale(1.06) translate3d(0, 0, 0);
-  filter: saturate(1.06) contrast(1.06);
-
   animation: jjw-post-header-float 22s ease-in-out infinite alternate;
 }
 

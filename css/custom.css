@@ -1,11 +1,14 @@
 /* Global style tweaks: clean blue-white, cards, spacing, micro-animations */
 
 :root {
-  --jjw-radius-lg: 16px;
-  --jjw-radius-md: 12px;
-  --jjw-shadow-sm: 0 1px 2px rgba(2, 6, 23, 0.06);
-  --jjw-shadow-md: 0 12px 30px rgba(2, 6, 23, 0.12);
+  --jjw-radius-lg: 20px;
+  --jjw-radius-md: 14px;
+  --jjw-shadow-sm: 0 1px 2px rgba(2, 6, 23, 0.05);
+  --jjw-shadow-md: 0 14px 36px rgba(2, 6, 23, 0.10);
   --jjw-border: rgba(148, 163, 184, 0.35); /* slate-400 */
+  --jjw-chip-bg: rgba(59, 130, 246, 0.10);
+  --jjw-chip-border: rgba(59, 130, 246, 0.30);
+  --jjw-chip-text: #1e40af;
 }
 
 /* Card radius + shadow */
@@ -78,6 +81,88 @@ html[data-theme="dark"] .recent-post-item:hover {
   border-color: rgba(59, 130, 246, 0.45);
 }
 
+/* Post meta chips: category/date info looks like tags */
+.article-meta-wrap > span,
+#post-meta .meta-firstline > span,
+#post-meta .meta-secondline > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--jjw-chip-border);
+  background: var(--jjw-chip-bg);
+  color: var(--jjw-chip-text);
+  margin: 3px 6px 3px 0;
+}
+
+.article-meta-wrap .article-meta-separator,
+#post-meta .post-meta-separator {
+  display: none;
+}
+
+.article-meta-wrap a.article-meta__categories,
+#post-meta a.post-meta-categories,
+#post-meta a.post-meta-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(29, 78, 216, 0.25);
+  background: rgba(255, 255, 255, 0.72);
+  color: #1d4ed8 !important;
+}
+
+html[data-theme="dark"] .article-meta-wrap > span,
+html[data-theme="dark"] #post-meta .meta-firstline > span,
+html[data-theme="dark"] #post-meta .meta-secondline > span {
+  background: rgba(30, 64, 175, 0.20);
+  border-color: rgba(96, 165, 250, 0.35);
+  color: #bfdbfe;
+}
+
+html[data-theme="dark"] .article-meta-wrap a.article-meta__categories,
+html[data-theme="dark"] #post-meta a.post-meta-categories,
+html[data-theme="dark"] #post-meta a.post-meta-tag {
+  background: rgba(15, 23, 42, 0.60);
+  border-color: rgba(96, 165, 250, 0.30);
+  color: #93c5fd !important;
+}
+
+/* Page load / PJAX transition */
+@keyframes jjw-enter-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+#recent-posts .recent-post-item,
+#aside-content .card-widget,
+#post,
+#page {
+  animation: jjw-enter-up 420ms ease both;
+}
+
+#recent-posts .recent-post-item:nth-child(2),
+#aside-content .card-widget:nth-child(2) {
+  animation-delay: 70ms;
+}
+
+#recent-posts .recent-post-item:nth-child(3),
+#aside-content .card-widget:nth-child(3) {
+  animation-delay: 120ms;
+}
+
+#recent-posts .recent-post-item:nth-child(4),
+#aside-content .card-widget:nth-child(4) {
+  animation-delay: 170ms;
+}
+
 /* Links feel snappier */
 a {
   transition: color 160ms ease, opacity 160ms ease;
@@ -104,9 +189,15 @@ a {
     transition: none !important;
   }
 
+  #recent-posts .recent-post-item,
+  #aside-content .card-widget,
+  #post,
+  #page {
+    animation: none !important;
+  }
+
   .card-widget:hover,
   .recent-post-item:hover {
     transform: none !important;
   }
 }
-
