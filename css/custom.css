@@ -1,0 +1,96 @@
+/* Global style tweaks: clean blue-white, cards, spacing, micro-animations */
+
+:root {
+  --jjw-radius-lg: 16px;
+  --jjw-radius-md: 12px;
+  --jjw-shadow-sm: 0 1px 2px rgba(2, 6, 23, 0.06);
+  --jjw-shadow-md: 0 12px 30px rgba(2, 6, 23, 0.12);
+  --jjw-border: rgba(148, 163, 184, 0.35); /* slate-400 */
+}
+
+/* Card radius + shadow */
+.card-widget,
+.recent-post-item,
+.layout > div:first-child,
+#post .post-content,
+#page .page {
+  border-radius: var(--jjw-radius-lg) !important;
+}
+
+.card-widget,
+.recent-post-item,
+#post,
+#page {
+  box-shadow: var(--jjw-shadow-sm), var(--jjw-shadow-md) !important;
+  border: 1px solid var(--jjw-border);
+}
+
+/* Make cards feel lighter on blue/white */
+.card-widget,
+.recent-post-item,
+#post,
+#page {
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Spacing */
+#content-inner.layout {
+  gap: 18px;
+}
+
+#recent-posts .recent-post-item {
+  margin-bottom: 18px !important;
+}
+
+.card-widget {
+  padding: 18px !important;
+}
+
+/* Micro animations (subtle) */
+.card-widget,
+.recent-post-item {
+  transition: transform 160ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  will-change: transform;
+}
+
+.card-widget:hover,
+.recent-post-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(2, 6, 23, 0.10), 0 18px 42px rgba(2, 6, 23, 0.18) !important;
+  border-color: rgba(59, 130, 246, 0.45);
+}
+
+/* Links feel snappier */
+a {
+  transition: color 160ms ease, opacity 160ms ease;
+}
+
+/* Homepage cover subtitle: stronger, readable on first screen */
+#site-subtitle {
+  margin-top: 10px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  letter-spacing: 0.2px;
+  text-shadow: 0 2px 14px rgba(2, 6, 23, 0.55);
+}
+
+#site-subtitle #subtitle {
+  opacity: 1;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card-widget,
+  .recent-post-item,
+  a {
+    transition: none !important;
+  }
+
+  .card-widget:hover,
+  .recent-post-item:hover {
+    transform: none !important;
+  }
+}
+
