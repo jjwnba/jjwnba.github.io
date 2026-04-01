@@ -1,0 +1,127 @@
+/* Live2D enhancements: dialog bubble + drag handle + hide button */
+
+.jjw-live2d {
+  position: fixed;
+  right: 20px;
+  bottom: 10px;
+  z-index: 9999;
+  user-select: none;
+}
+
+.jjw-live2d.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.jjw-live2d:not(.is-hidden) {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.jjw-live2d__bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 6px;
+}
+
+.jjw-live2d__handle {
+  width: 86px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.40);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: grab;
+}
+
+html[data-theme="dark"] .jjw-live2d__handle {
+  background: rgba(15, 23, 42, 0.55);
+  border-color: rgba(148, 163, 184, 0.18);
+}
+
+.jjw-live2d__btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.18);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 160ms ease, box-shadow 220ms ease;
+}
+
+html[data-theme="dark"] .jjw-live2d__btn {
+  background: rgba(17, 24, 39, 0.72);
+  border-color: rgba(148, 163, 184, 0.18);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+}
+
+.jjw-live2d__btn:hover {
+  transform: translateY(-1px);
+}
+
+.jjw-live2d__bubble {
+  max-width: 220px;
+  margin: 0 0 8px auto;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 10px 26px rgba(2, 6, 23, 0.16);
+  color: rgba(15, 23, 42, 0.92);
+  font-size: 13px;
+  line-height: 1.45;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+html[data-theme="dark"] .jjw-live2d__bubble {
+  background: rgba(17, 24, 39, 0.80);
+  border-color: rgba(148, 163, 184, 0.18);
+  color: rgba(226, 232, 240, 0.92);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
+}
+
+.jjw-live2d__bubble.is-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.jjw-live2d__bubble::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  bottom: -8px;
+  width: 14px;
+  height: 14px;
+  transform: rotate(45deg);
+  background: inherit;
+  border-right: 1px solid rgba(148, 163, 184, 0.35);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+html[data-theme="dark"] .jjw-live2d__bubble::after {
+  border-right-color: rgba(148, 163, 184, 0.18);
+  border-bottom-color: rgba(148, 163, 184, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jjw-live2d,
+  .jjw-live2d * {
+    transition: none !important;
+  }
+}
+

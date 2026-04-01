@@ -65,6 +65,20 @@
 
   
   <url>
+    <loc>https://www.jjwnb.top/tags/%E8%BF%BD%E7%95%AA/</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.jjwnb.top/tags/%E5%8A%A8%E6%BC%AB/</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://www.jjwnb.top/tags/%E5%AD%A4%E7%8B%AC%E6%91%87%E6%BB%9A/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -106,31 +120,17 @@
     <priority>0.2</priority>
   </url>
   
-  <url>
-    <loc>https://www.jjwnb.top/tags/%E8%BF%BD%E7%95%AA/</loc>
-    <lastmod>2026-04-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.jjwnb.top/tags/%E5%8A%A8%E6%BC%AB/</loc>
-    <lastmod>2026-04-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
   
   <url>
-    <loc>https://www.jjwnb.top/categories/%E4%BA%8C%E6%AC%A1%E5%85%83/</loc>
+    <loc>https://www.jjwnb.top/categories/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.jjwnb.top/categories/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/</loc>
+    <loc>https://www.jjwnb.top/categories/%E4%BA%8C%E6%AC%A1%E5%85%83/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
