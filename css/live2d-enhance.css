@@ -6,13 +6,8 @@
 
 #live2d-widget #live2dcanvas,
 #live2d-widget canvas {
-  cursor: grab;
-  touch-action: none;
-}
-
-#live2d-widget.is-dragging #live2dcanvas,
-#live2d-widget.is-dragging canvas {
-  cursor: grabbing;
+  cursor: default;
+  touch-action: auto;
 }
 
 /* Move built-in tool column outside the model to avoid overlap */
@@ -36,6 +31,19 @@
 #live2d-widget .waifu-tips {
   max-width: 240px;
   z-index: 2;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(148, 163, 184, 0.36) !important;
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.24) !important;
+  color: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+html[data-theme="dark"] #live2d-widget .waifu-tips {
+  background: rgba(15, 23, 42, 0.84) !important;
+  border-color: rgba(148, 163, 184, 0.22) !important;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.46) !important;
+  color: rgba(248, 250, 252, 0.94) !important;
 }
 
 @media (max-width: 768px) {
