@@ -1,177 +1,123 @@
 (() => {
-  const STORAGE_KEY = 'jjw_live2d_hidden'
+  const KEY = 'jjw_live2d_pos_v1'
 
-  const sayLines = {
-    idle: [
-      '在看什么呢？',
-      '要不要去翻翻归档？',
-      '今天也要开开心心。',
-      '我在这儿陪你。'
-    ],
-    hover: [
-      '嘿，别戳我啦。',
-      '摸摸头也可以。',
-      '想听你聊聊。'
-    ],
-    click: [
-      '哎呀！',
-      '点到了！',
-      '我知道你在！'
-    ]
+  const clamp = (n, min, max) => Math.min(Math.max(n, min), max)
+
+  const getPoint = (e) => {
+    if (e.touches && e.touches[0]) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY }
+    }
+    return { x: e.clientX, y: e.clientY }
   }
 
-  const pick = arr => arr[Math.floor(Math.random() * arr.length)]
-
-  const ensureShell = () => {
-    // The live2d widget mounts elements dynamically; wait for its canvas.
-    const canvas = document.getElementById('live2dcanvas') || document.querySelector('canvas#live2dcanvas')
-    if (!canvas) return null
-
-    // Find nearest fixed wrapper; fallback to parentNode.
-    const widgetRoot =
-      canvas.closest('#live2d-widget') ||
-      canvas.parentElement
-
-    if (!widgetRoot) return null
-
-    // Avoid double-init
-    if (widgetRoot.closest('.jjw-live2d')) return widgetRoot.closest('.jjw-live2d')
-
-    const shell = document.createElement('div')
-    shell.className = 'jjw-live2d'
-
-    const bubble = document.createElement('div')
-    bubble.className = 'jjw-live2d__bubble'
-
-    const bar = document.createElement('div')
-    bar.className = 'jjw-live2d__bar'
-
-    const handle = document.createElement('div')
-    handle.className = 'jjw-live2d__handle'
-    handle.title = '拖拽移动'
-
-    const btn = document.createElement('button')
-    btn.type = 'button'
-    btn.className = 'jjw-live2d__btn'
-    btn.title = '隐藏/显示'
-    btn.innerHTML = '<span style="font-weight:700;line-height:1">L2D</span>'
-
-    bar.appendChild(handle)
-    bar.appendChild(btn)
-    shell.appendChild(bubble)
-    shell.appendChild(bar)
-
-    // Insert shell before widget root
-    widgetRoot.parentNode.insertBefore(shell, widgetRoot)
-    shell.appendChild(widgetRoot)
-
-    return shell
+  const savePos = (left, top) => {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({ left, top }))
+    } catch (_) {}
   }
 
-  const initOnce = () => {
-    const shell = ensureShell()
-    if (!shell) return false
+  const loadPos = () => {
+    try {
+      const raw = localStorage.getItem(KEY)
+      if (!raw) return null
+      const data = JSON.parse(raw)
+      if (!Number.isFinite(data.left) || !Number.isFinite(data.top)) return null
+      return data
+    } catch (_) {
+      return null
+    }
+  }
 
-    const bubble = shell.querySelector('.jjw-live2d__bubble')
-    const handle = shell.querySelector('.jjw-live2d__handle')
-    const btn = shell.querySelector('.jjw-live2d__btn')
-    const canvas = shell.querySelector('#live2dcanvas') || shell.querySelector('canvas')
+  const placeWidget = (widget, left, top) => {
+    const rect = widget.getBoundingClientRect()
+    const maxLeft = Math.max(0, window.innerWidth - rect.width)
+    const maxTop = Math.max(0, window.innerHeight - rect.height)
+    widget.style.left = `${clamp(left, 0, maxLeft)}px`
+    widget.style.top = `${clamp(top, 0, maxTop)}px`
+    widget.style.right = 'auto'
+    widget.style.bottom = 'auto'
+  }
 
-    // restore hidden state
-    const hidden = localStorage.getItem(STORAGE_KEY) === '1'
-    shell.classList.toggle('is-hidden', hidden)
+  const initDrag = () => {
+    const widget = document.getElementById('live2d-widget')
+    if (!widget || widget.dataset.dragReady === '1') return false
 
-    let bubbleTimer = null
-    const showBubble = (text, ms = 3500) => {
-      if (!bubble) return
-      bubble.textContent = text
-      bubble.classList.add('is-show')
-      if (bubbleTimer) window.clearTimeout(bubbleTimer)
-      bubbleTimer = window.setTimeout(() => bubble.classList.remove('is-show'), ms)
+    const canvas = widget.querySelector('#live2dcanvas') || widget.querySelector('canvas')
+    if (!canvas) return false
+
+    widget.dataset.dragReady = '1'
+
+    const saved = loadPos()
+    if (saved) {
+      placeWidget(widget, saved.left, saved.top)
     }
 
-    // Dialog: hover/click/idle
-    shell.addEventListener('mouseenter', () => showBubble(pick(sayLines.hover)))
-    if (canvas) canvas.addEventListener('click', () => showBubble(pick(sayLines.click)))
-
-    let idleTick = null
-    const startIdle = () => {
-      if (idleTick) window.clearInterval(idleTick)
-      idleTick = window.setInterval(() => {
-        if (!shell.classList.contains('is-hidden')) showBubble(pick(sayLines.idle))
-      }, 18000)
-    }
-    startIdle()
-
-    // Hide / show
-    btn?.addEventListener('click', () => {
-      const next = !shell.classList.contains('is-hidden')
-      shell.classList.toggle('is-hidden', next)
-      localStorage.setItem(STORAGE_KEY, next ? '1' : '0')
-      if (!next) showBubble('我回来啦。', 2000)
-    })
-
-    // Drag via handle (won't interfere with canvas interactions)
     let dragging = false
     let startX = 0
     let startY = 0
-    let startRight = 20
-    let startBottom = 10
+    let baseLeft = 0
+    let baseTop = 0
 
-    const parsePx = v => {
-      const n = Number.parseFloat(String(v || '0').replace('px', ''))
-      return Number.isFinite(n) ? n : 0
-    }
+    const onDown = (e) => {
+      if (e.type === 'mousedown' && e.button !== 0) return
+      if (e.target.closest('.waifu-tool')) return
 
-    const onDown = e => {
+      const rect = widget.getBoundingClientRect()
+      placeWidget(widget, rect.left, rect.top)
+
+      const p = getPoint(e)
+      startX = p.x
+      startY = p.y
+      baseLeft = rect.left
+      baseTop = rect.top
       dragging = true
-      const p = e.touches ? e.touches[0] : e
-      startX = p.clientX
-      startY = p.clientY
-      const style = window.getComputedStyle(shell)
-      startRight = parsePx(style.right)
-      startBottom = parsePx(style.bottom)
-      handle.style.cursor = 'grabbing'
+      widget.classList.add('is-dragging')
       e.preventDefault()
     }
 
-    const onMove = e => {
+    const onMove = (e) => {
       if (!dragging) return
-      const p = e.touches ? e.touches[0] : e
-      const dx = p.clientX - startX
-      const dy = p.clientY - startY
-      shell.style.right = `${Math.max(0, startRight - dx)}px`
-      shell.style.bottom = `${Math.max(0, startBottom - dy)}px`
+      const p = getPoint(e)
+      const nextLeft = baseLeft + (p.x - startX)
+      const nextTop = baseTop + (p.y - startY)
+      placeWidget(widget, nextLeft, nextTop)
       e.preventDefault()
     }
 
     const onUp = () => {
       if (!dragging) return
       dragging = false
-      handle.style.cursor = 'grab'
+      widget.classList.remove('is-dragging')
+      const rect = widget.getBoundingClientRect()
+      savePos(rect.left, rect.top)
     }
 
-    handle?.addEventListener('mousedown', onDown, { passive: false })
+    canvas.addEventListener('mousedown', onDown, { passive: false })
+    canvas.addEventListener('touchstart', onDown, { passive: false })
     window.addEventListener('mousemove', onMove, { passive: false })
-    window.addEventListener('mouseup', onUp)
-    handle?.addEventListener('touchstart', onDown, { passive: false })
     window.addEventListener('touchmove', onMove, { passive: false })
+    window.addEventListener('mouseup', onUp)
     window.addEventListener('touchend', onUp)
+
+    window.addEventListener('resize', () => {
+      const rect = widget.getBoundingClientRect()
+      placeWidget(widget, rect.left, rect.top)
+      savePos(widget.getBoundingClientRect().left, widget.getBoundingClientRect().top)
+    })
 
     return true
   }
 
   const boot = () => {
-    // Try a few times, because widget loads async.
     let tries = 0
     const timer = window.setInterval(() => {
       tries += 1
-      const ok = initOnce()
-      if (ok || tries > 40) window.clearInterval(timer)
+      if (initDrag() || tries > 40) {
+        window.clearInterval(timer)
+      }
     }, 250)
   }
 
   document.addEventListener('DOMContentLoaded', boot)
   document.addEventListener('pjax:complete', boot)
 })()
-
