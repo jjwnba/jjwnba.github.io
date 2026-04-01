@@ -7,6 +7,41 @@ body.jjw-post-page #web_bg {
   background-repeat: no-repeat !important;
 }
 
+/* Archive / category / about top header use the same bg2 artwork */
+#body-wrap.page #page-header:not(.full_page),
+#body-wrap.archive #page-header:not(.full_page),
+#body-wrap.category #page-header:not(.full_page) {
+  position: relative;
+  overflow: hidden;
+  background-color: transparent !important;
+  background-image: url("/img/bg2.webp") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+#body-wrap.page #page-header:not(.full_page)::before,
+#body-wrap.archive #page-header:not(.full_page)::before,
+#body-wrap.category #page-header:not(.full_page)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.16)) !important;
+}
+
+#body-wrap.page #page-header:not(.full_page) #page-site-info,
+#body-wrap.archive #page-header:not(.full_page) #page-site-info,
+#body-wrap.category #page-header:not(.full_page) #page-site-info,
+#body-wrap.page #page-header:not(.full_page) #page-site-info *,
+#body-wrap.archive #page-header:not(.full_page) #page-site-info *,
+#body-wrap.category #page-header:not(.full_page) #page-site-info * {
+  position: relative;
+  z-index: 1;
+  color: #fff !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
+
 /* -------------------------
    Post header background
    ------------------------- */

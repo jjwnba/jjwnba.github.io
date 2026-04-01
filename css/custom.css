@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=ZCOOL+XiaoWei&display=swap");
+
 /* Global style tweaks: clean blue-white, cards, spacing, micro-animations */
 
 :root {
@@ -9,6 +11,77 @@
   --jjw-chip-bg: rgba(59, 130, 246, 0.10);
   --jjw-chip-border: rgba(59, 130, 246, 0.30);
   --jjw-chip-text: #1e40af;
+  --jjw-font-body: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+  --jjw-font-title: "ZCOOL XiaoWei", "Noto Serif SC", serif;
+  --jjw-font-code: "Maple Mono", "Cascadia Code", "JetBrains Mono", monospace;
+  --jjw-nav-bg: rgba(255, 255, 255, 0.48);
+  --jjw-nav-border: rgba(255, 255, 255, 0.26);
+  --jjw-nav-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+}
+
+body {
+  font-family: var(--jjw-font-body);
+  font-weight: 500;
+}
+
+#site-title,
+#site-subtitle,
+.post-title,
+.article-title,
+#page-site-info #site-title,
+#page-site-info .page-title,
+#archive,
+#category,
+#tag,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--jjw-font-title) !important;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+code,
+pre,
+.highlight-tools,
+figure.highlight pre,
+figure.highlight code {
+  font-family: var(--jjw-font-code) !important;
+}
+
+/* Frosted navbar */
+#page-header.nav-fixed #nav,
+#page-header.not-top-img #nav,
+#page-header #nav {
+  background: var(--jjw-nav-bg) !important;
+  border-bottom: 1px solid var(--jjw-nav-border);
+  box-shadow: var(--jjw-nav-shadow);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+#page-header #nav::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06));
+  pointer-events: none;
+}
+
+#page-header #nav #blog-info,
+#page-header #nav #menus,
+#page-header #nav #toggle-menu {
+  position: relative;
+  z-index: 1;
+}
+
+html[data-theme="dark"] {
+  --jjw-nav-bg: rgba(15, 23, 42, 0.46);
+  --jjw-nav-border: rgba(148, 163, 184, 0.18);
+  --jjw-nav-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
 }
 
 /* Card radius + shadow */
