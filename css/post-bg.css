@@ -1,4 +1,4 @@
-/* Post page header fixed background (bg2.jpg). */
+/* Post page header fixed background (bg3.webp). */
 
 /* -------------------------
    Post header background
@@ -8,7 +8,7 @@
   position: relative;
   overflow: hidden;
   background-color: transparent !important;
-  background-image: url("/img/bg2.jpg") !important;
+  background-image: url("/img/bg3.webp") !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
