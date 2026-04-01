@@ -53,6 +53,18 @@
   }
 }
 
+#web_bg {
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 280ms ease, transform 600ms ease;
+  pointer-events: none;
+}
+
+body.jjw-post-page #web_bg {
+  opacity: 1;
+  transform: scale(1);
+}
+
 #web_bg.jjw-post-bg--hidden {
   opacity: 0;
   transform: scale(1.02);
@@ -60,7 +72,7 @@
   pointer-events: none;
 }
 
-#web_bg:not(.jjw-post-bg--hidden) {
+body.jjw-post-page #web_bg:not(.jjw-post-bg--hidden) {
   opacity: 1;
   transform: scale(1);
   transition: opacity 280ms ease, transform 600ms ease;
@@ -69,7 +81,7 @@
   animation: jjw-post-bg-float 26s ease-in-out infinite alternate;
 }
 
-#web_bg:not(.jjw-post-bg--hidden)::after {
+body.jjw-post-page #web_bg:not(.jjw-post-bg--hidden)::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -98,8 +110,7 @@
   #body-wrap.post #page-header.post-bg::before {
     animation: none;
   }
-  #web_bg:not(.jjw-post-bg--hidden) {
+  body.jjw-post-page #web_bg:not(.jjw-post-bg--hidden) {
     animation: none;
   }
 }
-

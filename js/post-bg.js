@@ -4,12 +4,19 @@
   const apply = () => {
     const webBg = document.getElementById('web_bg')
     const bodyWrap = document.getElementById('body-wrap')
-    if (!bodyWrap) return
+    if (!bodyWrap) {
+      document.body.classList.remove('jjw-post-page')
+      return
+    }
 
     const isPost = bodyWrap.classList.contains('post')
+    document.body.classList.toggle('jjw-post-page', isPost)
 
     if (webBg) {
       webBg.classList.toggle('jjw-post-bg--hidden', !isPost)
+      if (!isPost) {
+        webBg.style.backgroundImage = ''
+      }
     }
 
     if (isPost) {
@@ -22,6 +29,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', apply)
+  document.addEventListener('pjax:send', apply)
   document.addEventListener('pjax:complete', apply)
 })()
-
