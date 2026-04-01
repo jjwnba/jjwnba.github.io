@@ -1,5 +1,5 @@
 (() => {
-  const KEY = 'jjw_live2d_pos_v1'
+  const KEY = 'jjw_live2d_pos_v2'
 
   const clamp = (n, min, max) => Math.min(Math.max(n, min), max)
 

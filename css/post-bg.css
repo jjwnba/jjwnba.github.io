@@ -1,4 +1,4 @@
-/* Post-only background effects for Butterfly (#web_bg). */
+/* Post page header fixed background (bg2.jpg). */
 
 /* -------------------------
    Post header background
@@ -15,7 +15,7 @@
   inset: 0;
   z-index: 0;
 
-  background-image: var(--jjw-post-header-bg, none);
+  background-image: url("/img/bg2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -53,64 +53,8 @@
   }
 }
 
-#web_bg {
-  opacity: 0;
-  transform: scale(1.02);
-  transition: opacity 280ms ease, transform 600ms ease;
-  pointer-events: none;
-}
-
-body.jjw-post-page #web_bg {
-  opacity: 1;
-  transform: scale(1);
-}
-
-#web_bg.jjw-post-bg--hidden {
-  opacity: 0;
-  transform: scale(1.02);
-  transition: opacity 280ms ease, transform 600ms ease;
-  pointer-events: none;
-}
-
-body.jjw-post-page #web_bg:not(.jjw-post-bg--hidden) {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 280ms ease, transform 600ms ease;
-
-  /* Subtle motion for a more designed feel. */
-  animation: jjw-post-bg-float 26s ease-in-out infinite alternate;
-}
-
-body.jjw-post-page #web_bg:not(.jjw-post-bg--hidden)::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  /* Soft overlay + slight texture to reduce visual noise. */
-  background:
-    radial-gradient(1200px 800px at 15% 20%, rgba(255, 255, 255, 0.14), transparent 55%),
-    radial-gradient(900px 650px at 85% 30%, rgba(0, 0, 0, 0.18), transparent 55%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.10));
-  mix-blend-mode: overlay;
-  opacity: 0.75;
-}
-
-@keyframes jjw-post-bg-float {
-  0% {
-    filter: saturate(1.02) contrast(1.02);
-    transform: scale(1) translate3d(0, 0, 0);
-  }
-  100% {
-    filter: saturate(1.08) contrast(1.04);
-    transform: scale(1.06) translate3d(-1.2%, 1.2%, 0);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   #body-wrap.post #page-header.post-bg::before {
-    animation: none;
-  }
-  body.jjw-post-page #web_bg:not(.jjw-post-bg--hidden) {
     animation: none;
   }
 }
