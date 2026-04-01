@@ -1,5 +1,5 @@
 (() => {
-  const postBgArr = ['/img/bg.jpg', '/img/bg2.jpg']
+  const postBgArr = ['/img/bg.webp', '/img/bg2.jpg']
 
   const apply = () => {
     const webBg = document.getElementById('web_bg')
