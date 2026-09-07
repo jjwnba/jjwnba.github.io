@@ -1,0 +1,35 @@
+/* Readable navigation in both themes. */
+:root { --jjw-nav-bg: rgba(255,255,255,.94); }
+html[data-theme="dark"] { --jjw-nav-bg: rgba(15,23,42,.94); }
+#page-header #nav .site-page,
+#page-header #nav a { color: #172033 !important; text-shadow: none; }
+html[data-theme="dark"] #page-header #nav .site-page,
+html[data-theme="dark"] #page-header #nav a { color: #f1f5f9 !important; }
+#page-header #nav a:hover { text-decoration: underline; }
+#toggle-menu[role="button"] { cursor: pointer; }
+#toggle-menu:focus-visible { outline: 3px solid #2563eb; outline-offset: 4px; }
+#site-subtitle {
+  display: block;
+  width: fit-content;
+  margin: 10px auto 0;
+  max-width: 90%;
+  padding: .4rem .8rem;
+  border-radius: .6rem;
+  background: rgba(15,23,42,.72);
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+#recent-posts .recent-post-item .content {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+#article-container { font-size: 1rem; }
+@media (max-width: 768px) {
+  #live2d-widget { display: none !important; }
+  #site-subtitle { letter-spacing: normal; }
+}
