@@ -1,4 +1,19 @@
 /* Readable navigation in both themes. */
+#menus .menus_item.ignore:focus-within .menus_item_child { display: block; }
+#menus .menus_item.ignore > .group:focus-visible { outline: 2px solid #2563eb; }
+#translation-status {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 10001;
+  max-width: min(90vw, 560px);
+  padding: 12px 18px;
+  border-radius: 8px;
+  background: #172033;
+  color: white;
+  font: 14px/1.6 sans-serif;
+}
 :root { --jjw-nav-bg: rgba(255,255,255,.94); }
 html[data-theme="dark"] { --jjw-nav-bg: rgba(15,23,42,.94); }
 #page-header #nav .site-page,

@@ -3,15 +3,6 @@
   window.jjwSiteFixesInstalled = true;
   let observer;
   function enhance() {
-    // Refresh after PJAX so translation stays on the article being read.
-    document.querySelectorAll('a[href]').forEach(link => {
-      const url = new URL(link.href, location.href);
-      if (url.hostname === 'translate.google.com' && url.pathname === '/translate') {
-        const original = new URL(url.searchParams.get('u'));
-        url.searchParams.set('u', original.origin + location.pathname);
-        link.href = url.href;
-      }
-    });
     const toggle = document.getElementById('toggle-menu');
     const menu = document.getElementById('sidebar-menus');
     observer?.disconnect();
