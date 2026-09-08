@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.jjwnb.top/music/playlist.json</loc>
+    
+    <lastmod>2026-09-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.jjwnb.top/2026/07/01/2026%E5%B9%B47%E6%9C%88%E8%BF%BD%E7%95%AA%E8%AE%B0%E5%BD%95/</loc>
     
     <lastmod>2026-09-07</lastmod>
