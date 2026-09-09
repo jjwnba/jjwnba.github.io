@@ -1,0 +1,7 @@
+#jjw-bangumi-card .bangumi-card-link { display: block; color: var(--font-color); border-radius: 10px; }
+#jjw-bangumi-card .bangumi-card-stats { display: flex; justify-content: space-around; padding: 8px 0 12px; text-align: center; }
+#jjw-bangumi-card .bangumi-card-stats > span { display: flex; flex-direction: column; }
+#jjw-bangumi-card strong { font-size: 24px; line-height: 1.4; font-weight: 600; }
+#jjw-bangumi-card .bangumi-card-more { display: block; text-align: center; font-size: 13px; color: var(--btn-bg); }
+#jjw-bangumi-card .bangumi-card-link:hover strong { color: var(--btn-bg); }
+#jjw-bangumi-card .bangumi-card-link:focus-visible { outline: 2px solid var(--btn-bg); outline-offset: 3px; }

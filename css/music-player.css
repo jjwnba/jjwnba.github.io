@@ -28,8 +28,7 @@
 #music-panel .music-list button{width:100%;text-align:left;border-radius:8px;padding:8px;background:transparent;color:inherit;font-size:12px}
 #music-panel .music-list button[aria-current=true]{background:#eaf2ff;color:#2563eb}
 #music-panel .music-status{font-size:11px;color:#64748b;margin:8px 0}
-#music-panel footer{font-size:10px;color:#8490a3}
 [data-theme=dark] #music-panel,[data-theme=dark] #blog-music .music-dock{background:#182235f5;border-color:#334155;color:#e2e8f0}
 @keyframes music-spin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){#blog-music .music-vinyl{animation:none}}
-@media(max-width:768px){#blog-music{left:12px;bottom:14px}#blog-music .music-mini{display:none}#blog-music .music-disc{width:56px;height:56px}#blog-music .music-vinyl:after{inset:15px}}
+@media(max-width:768px){#blog-music{left:12px;bottom:14px}#blog-music .music-mini{display:none}#blog-music .music-disc{width:56px;height:56px}}

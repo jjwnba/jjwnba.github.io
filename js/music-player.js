@@ -20,7 +20,15 @@
   const panel = find('#music-panel'), disc = find('.music-disc'), toggle = find('.music-toggle')
   const audio = new Audio()
   audio.preload = 'metadata'
-  audio.volume = 0.6
+  const volumeKey = 'jjw-music-volume'
+  let savedVolume = 0.6
+  try {
+    const stored = localStorage.getItem(volumeKey)
+    const value = stored === null || stored.trim() === '' ? NaN : Number(stored)
+    if (Number.isFinite(value) && value >= 0 && value <= 1) savedVolume = value
+  } catch { /* Storage may be unavailable; retain the default volume. */ }
+  audio.volume = savedVolume
+  find('.music-volume input').value = String(savedVolume)
   let tracks = [], current = -1, pending, request = 0
   const failed = new Set()
   const time = n => Number.isFinite(n) ? Math.floor(n / 60) + ':' + String(Math.floor(n % 60)).padStart(2, '0') : '0:00'
@@ -98,7 +106,13 @@
   toggle.addEventListener('click', () => { setPanel(panel.hidden); load().catch(() => status('歌单加载失败')) })
   find('.music-close').addEventListener('click', () => { setPanel(false); toggle.focus() })
   root.addEventListener('keydown', e => { if (e.key === 'Escape') { setPanel(false); toggle.focus() } })
-  find('.music-volume input').addEventListener('input', e => { audio.volume = Number(e.target.value) })
+  find('.music-volume input').addEventListener('input', e => {
+    const value = Number(e.target.value)
+    if (!Number.isFinite(value) || value < 0 || value > 1) return
+    audio.volume = value
+    try { localStorage.setItem(volumeKey, String(value)) }
+    catch { /* Playback still works when storage is blocked or full. */ }
+  })
   find('.music-seek').addEventListener('input', e => { if (Number.isFinite(audio.duration)) audio.currentTime = Number(e.target.value) / 100 * audio.duration })
   audio.addEventListener('playing', () => { state(true); status('正在播放 · 随机模式') })
   audio.addEventListener('pause', () => { state(false); if (!audio.ended) status('已暂停') })
