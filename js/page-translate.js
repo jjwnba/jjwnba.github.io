@@ -4,6 +4,11 @@
   const languages = { zh: 'chinese_simplified', en: 'english', ja: 'japanese' };
   let loading;
   let busy = false;
+  const languagePreference = {
+    get() { try { return sessionStorage.getItem('jjw-language'); } catch { return null; } },
+    set(code) { try { sessionStorage.setItem('jjw-language', code); } catch { /* Translation still works without storage. */ } },
+    clear() { try { sessionStorage.removeItem('jjw-language'); } catch { /* Storage is optional. */ } }
+  };
   const prepare = () => {
     document.querySelectorAll('a[href*="#translate-"]').forEach(link => {
       link.classList.add('ignore');
@@ -47,7 +52,7 @@
           engine.selectLanguageTag.show = false;
           engine.language.setLocal('chinese_simplified');
           // Use the library's public translation service.
-          engine.ignore.id.push('live2d-widget', 'translation-status');
+          engine.ignore.id.push('live2d-widget', 'translation-status', 'post-comment', 'blog-music');
           engine.ignore.tag.push('pre', 'code', 'textarea', 'input');
           const subtitle = document.getElementById('subtitle');
           if (subtitle) {
@@ -72,7 +77,7 @@
     event.stopImmediatePropagation();
     if (busy) return;
     if (code === 'zh') {
-      sessionStorage.removeItem('jjw-language');
+      languagePreference.clear();
       if (window.translate) window.translate.changeLanguage('chinese_simplified');
       document.documentElement.lang = 'zh-CN';
       notice('');
@@ -84,7 +89,7 @@
       const engine = await load();
       engine.changeLanguage(languages[code]);
       document.documentElement.lang = code;
-      sessionStorage.setItem('jjw-language', code);
+      languagePreference.set(code);
       notice('Translation requested. If text stays unchanged, check your connection and retry.');
       setTimeout(() => notice(''), 8000);
     } catch (_) {
@@ -97,7 +102,7 @@
   });
   function start() {
     prepare();
-    const code = sessionStorage.getItem('jjw-language');
+    const code = languagePreference.get();
     if (code && languages[code]) load().then(engine => engine.changeLanguage(languages[code])).catch(() => notice('Translation unavailable. Please retry.'));
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
