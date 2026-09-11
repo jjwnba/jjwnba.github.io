@@ -257,7 +257,7 @@
   const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 
   window.pjax = new Pjax({
-    elements: 'a:not([target="_blank"])',
+    elements: 'a:not([target="_blank"]):not([href="/bangumis/"]):not([href="/bangumis/index.html"]):not([href="https://www.jjwnb.top/bangumis/"]):not([href="https://www.jjwnb.top/bangumis/index.html"])',
     selectors: pjaxSelectors,
     cacheBust: false,
     analytics: false,
