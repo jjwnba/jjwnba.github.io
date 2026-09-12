@@ -1,0 +1,10 @@
+.jjw-bangumi-search { margin: 20px 0; padding: 16px; border: 1px solid var(--bangumi-border, #dde5ee); border-radius: 12px; background: var(--bangumi-surface, #f7f9fc); color: var(--bangumi-text, #1d2733); }
+.jjw-search-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 10px; }
+#bangumi-search-input { flex: 1; min-width: 150px; width: 100%; padding: 8px 12px; border: 1px solid var(--bangumi-border, #dde5ee); border-radius: 8px; background: var(--bangumi-bg, #fff); color: inherit; }
+.jjw-bangumi-search select { max-width: 100%; padding: 5px; background: var(--bangumi-bg, #fff); color: inherit; border: 1px solid var(--bangumi-border, #dde5ee); }
+.jjw-bangumi-search button, .jjw-search-pages button { padding: 6px 14px; border-radius: 8px; background: var(--bangumi-accent, #2f80ed); color: white; cursor: pointer; }
+.jjw-search-pages { display: flex; justify-content: center; align-items: center; gap: 16px; padding: 16px 0; }
+.jjw-search-pages button:disabled { opacity: .45; cursor: default; }
+.jjw-search-status { margin: 8px 0 0; font-size: .9em; }
+.jjw-search-active [data-jjw-original-list], .jjw-search-results[hidden], .jjw-search-pages[hidden] { display: none !important; }
+.jjw-bangumi-search :focus-visible, .jjw-search-pages button:focus-visible { outline: 2px solid var(--bangumi-accent, #2f80ed); outline-offset: 3px; }
